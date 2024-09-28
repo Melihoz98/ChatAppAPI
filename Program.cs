@@ -7,9 +7,21 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<IDictionary<string, UserRoomConnection>>(IServiceProvider =>
     new Dictionary<string, UserRoomConnection>());
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:4200")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+    });
+});
     
 var app = builder.Build();
 app.UseRouting();
+app.UseCors();
 app.UseEndpoints(endpoint =>
 {
     endpoint.MapHub<ChatHub>("/chat");
