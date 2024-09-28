@@ -14,7 +14,7 @@ namespace ChatAppAPI.Hub
             await Groups.AddToGroupAsync(Context.ConnectionId, userConnection.Room!);
             _connection[Context.ConnectionId] = userConnection;
             await Clients.Group(userConnection.Room!)
-                .SendAsync("ReceiveMessage", "Lets Program Bot", $"{userConnection.User} has Joined the Group");
+                .SendAsync("ReceiveMessage", "Lets Program Bot", $"{userConnection.User} has Joined the Group", DateTime.Now);
             await SendConnectedUser(userConnection.Room!);
         }
 
@@ -34,7 +34,7 @@ namespace ChatAppAPI.Hub
                 return base.OnDisconnectedAsync(exp);
             }
             Clients.Group(roomConnection.Room!)
-            .SendAsync("RecieveMessage", "Lets Program bot", $"{roomConnection.User} has left the Group");
+            .SendAsync("RecieveMessage", "Lets Program bot", $"{roomConnection.User} has left the Group", DateTime.Now);
             SendConnectedUser(roomConnection.Room!);
             return base.OnDisconnectedAsync(exp);
                 
