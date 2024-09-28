@@ -9,6 +9,7 @@ builder.Services.AddSingleton<IDictionary<string, UserRoomConnection>>(IServiceP
     new Dictionary<string, UserRoomConnection>());
     
 var app = builder.Build();
+app.UseRouting();
 app.UseEndpoints(endpoint =>
 {
     endpoint.MapHub<ChatHub>("/chat");
