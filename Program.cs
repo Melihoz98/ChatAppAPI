@@ -1,11 +1,17 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.OpenApi.Models;
 using ChatAppAPI.Hub;
 using ChatAppAPI;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.OpenApi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
+
 // Add services to the container.
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSignalR();
-builder.Services.AddSingleton<IDictionary<string, UserRoomConnection>>(IServiceProvider =>
+builder.Services.AddSingleton<IDictionary<string, UserRoomConnection>>(opt =>
     new Dictionary<string, UserRoomConnection>());
 
 builder.Services.AddCors(options =>
@@ -13,13 +19,20 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(builder =>
     {
         builder.WithOrigins("http://localhost:4200")
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-        .AllowCredentials();
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
     });
 });
-    
+
 var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 app.UseRouting();
 app.UseCors();
 app.UseEndpoints(endpoint =>
@@ -27,5 +40,6 @@ app.UseEndpoints(endpoint =>
     endpoint.MapHub<ChatHub>("/chat");
 });
 
-app.Run();
+app.MapControllers();
 
+app.Run();
