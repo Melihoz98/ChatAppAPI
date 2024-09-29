@@ -21,7 +21,7 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins("http://localhost:4200")  // Frontend origin
+        policy.WithOrigins("https://lemon-sky-0d5fb4903.5.azurestaticapps.net")  // Frontend origin
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();  // Important for SignalR
