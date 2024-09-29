@@ -1,7 +1,7 @@
 ﻿using ChatAppAPI;
 using Microsoft.AspNetCore.SignalR;
 
-namespace ChatApplicationYT.Hub;
+namespace ChatAppAPI.Hub;
 
 public class ChatHub : Microsoft.AspNetCore.SignalR.Hub
 {
