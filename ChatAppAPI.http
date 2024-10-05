@@ -1,4 +1,4 @@
-@ChatAppAPI_HostAddress = http://localhost:5077
+@ChatAppAPI_HostAddress = https://chatapi-hrduaufgaqcgfwes.northeurope-01.azurewebsites.net/
 
 GET {{ChatAppAPI_HostAddress}}/weatherforecast/
 Accept: application/json
